@@ -134,7 +134,7 @@ while success:
 	if np.amax(h_pred) <= 0:
 		out.write(image)
 	else:
-		_, cnts, _ = cv2.findContours(h_pred[0].copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+		cnts, _ = cv2.findContours(h_pred[0].copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 		rects = [cv2.boundingRect(ctr) for ctr in cnts]
 		max_area_idx = 0
 		max_area = rects[max_area_idx][2] * rects[max_area_idx][3]
