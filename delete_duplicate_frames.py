@@ -1,5 +1,6 @@
 from parser import parser
 import cv2
+import numpy as np
 
 def is_similar(image1, image2):
     return image1.shape == image2.shape and np.amax(cv2.subtract(image1, image2))<80
