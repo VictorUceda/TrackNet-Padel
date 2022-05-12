@@ -205,6 +205,7 @@ def confusion(y_pred, y_true, tol):
 
             dist = ((cx_pred-cx_true)**2 + (cy_pred-cy_true)**2)**0.5
             if dist > tol:
+		print("FP1: "+str(cx_pred)+"-"+str(cx_true)+" / "+str(cy_pred)+"-"+str(cy_true)
                 FP1 += 1
             else:
                 TP += 1
