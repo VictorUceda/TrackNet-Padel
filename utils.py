@@ -179,7 +179,7 @@ def confusion(y_pred, y_true, tol):
         h_pred = h_pred.astype('uint8')
         h_true = y_true[b]*255
         h_true = h_true.astype('uint8')
-	print(str(h_true)+" of "+str(batch_size))
+        print(str(h_true)+" of "+str(batch_size))
         if np.amax(h_pred)==0 and np.amax(h_true)==0:
             TN += 1
         elif np.amax(h_pred)>0 and np.amax(h_true)==0:
