@@ -121,8 +121,8 @@ while success:
 	if info[frame_no]['Ball'] == 0:
 		y_true.append(genHeatMap(WIDTH, HEIGHT, -1, -1, sigma, mag))
 	else:
-		print(str(WIDTH)+" "+str(HEIGHT)+" "+str(info[frame_no]['x'])+" "+str(info[frame_no]['y']))
-		y_true.append(genHeatMap(WIDTH, HEIGHT, int(info[frame_no]['x']), int(info[frame_no]['y']), sigma, mag))
+		print("prediction :"+str(WIDTH)+" "+str(HEIGHT)+" "+str(info[frame_no]['x']/ratio)+" "+str(info[frame_no]['y']/ratio))
+		y_true.append(genHeatMap(WIDTH, HEIGHT, int(info[frame_no]['x']/ratio), int(info[frame_no]['y']/ratio), sigma, mag))
 
 	tp, tn, fp1, fp2, fn = confusion(y_pred, y_true, tol)
 	TP += tp
@@ -150,6 +150,7 @@ while success:
 
 		image_cp = np.copy(image)
 		cv2.circle(image_cp, (cx_pred, cy_pred), 5, (0,0,255), -1)
+		print("found :"+str(cx_pred)+" "+str(cy_pred))
 		out.write(image_cp)
 
 	success, image = cap.read()
