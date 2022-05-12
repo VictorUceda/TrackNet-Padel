@@ -74,6 +74,7 @@ else:
 		}
 	else:
 		print("Load csv file successfully")
+		print(info)
 
 print('Beginning predicting......')
 
