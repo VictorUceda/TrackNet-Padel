@@ -82,7 +82,7 @@ print('Beginning predicting......')
 gray_imgs = deque()
 success, image = cap.read()
 ratio = image.shape[0] / HEIGHT
-
+print("ratio: "+str(ratio))
 size = (int(WIDTH*ratio), int(HEIGHT*ratio))
 fourcc = cv2.VideoWriter_fourcc(*'mp4v')
 out = cv2.VideoWriter(video_name+'_predict.mp4', fourcc, fps, size)
