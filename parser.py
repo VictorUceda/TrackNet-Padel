@@ -14,7 +14,7 @@ parser.add_argument('--sigma', type=float, default=2.5,
 parser.add_argument('--mag', type=float, default=1.0,
                     help='factor to change range of grayscale(default: 1.0)')
 parser.add_argument('--tol', type=float, default=5.0,
-                    help='''acceptable tolerance of heat map circle center between 
+                    help='''acceptable tolerance of heat map circle center between
                             ground truth and prediction(default: 5.0)''')
 parser.add_argument('--batch_size', type=int, default=2,
                     help='batch size(default: 2)')
@@ -33,7 +33,7 @@ parser.add_argument('--min_lr', type=float, default=0.01,
 parser.add_argument('--min_delta', type=float, default=0.0,
                     help='minimum delta of loss(default: 0.0)')
 parser.add_argument('--patience', type=int, default=3,
-                    help='''number of epochs with no improvement after which 
+                    help='''number of epochs with no improvement after which
                             learning rate will be reduced.(default: 3)''')
 parser.add_argument('--r_factor', type=float, default=0.1,
                     help='lr reduce factor(default: 0.1)')
@@ -51,3 +51,7 @@ parser.add_argument('--video_path', type=str, default='test/test.mp4',
                     help='video path to predict')
 parser.add_argument('--label_path', type=str, default='test/test.csv',
                     help='load ground truth csv for predict')
+
+# parser for cut tool
+parser.add_argument('--output_segments_path', type=str, default='raw_data/points/',
+                    help='video path to cuts')

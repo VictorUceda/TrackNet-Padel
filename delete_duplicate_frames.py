@@ -26,13 +26,15 @@ while (cap.isOpened()):
         if last_img is not None and is_similar(last_img, img):
           print(i)
           continue
-        
+
         last_img = img
         i += 1
+        if not i % 1000:
+            print(str(i)+" Frame")
         #cv2.putText(img, str(i), (80,150), cv2.FONT_HERSHEY_SIMPLEX, 1, (153, 0, 0), 1, cv2.LINE_AA)
 
         #save img
         videoWriter.write(img)
-        
+
 cap.release()
 videoWriter.release()

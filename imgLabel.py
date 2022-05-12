@@ -17,6 +17,7 @@ if not os.path.isfile(video_path) or not video_path.endswith('.mp4'):
 # y: y position of ball center
 csv_path = args.csv_path
 load_csv = False
+print(csv_path)
 if os.path.isfile(csv_path) and csv_path.endswith('.csv'):
     load_csv = True
 else:
@@ -30,7 +31,7 @@ n_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
 if load_csv:
     info = load_info(csv_path)
     if len(info) != n_frames:
-        print("Number of frames in video and dictionary are not the same!")
+        print("Number of frames in video and dictionary are not the same! "+str(len(info))+" vs "+str(n_frames))
         print("Fail to load, create new dictionary instead.")
         info = {
             idx:{
@@ -102,7 +103,7 @@ while True:
                     sys.exit(1)
                 elif leave == 'n':
                     break
-       
+
         if leave == 'y':
             cap.release()
             cv2.destroyAllWindows()
@@ -133,7 +134,7 @@ while True:
             print("This is the first frame")
             continue
         frame_no = 0
-        image = go2frame(cap, frame_no, info) 
+        image = go2frame(cap, frame_no, info)
         print("Frame No.{}".format(frame_no))
 
     elif key == ord('l'):
