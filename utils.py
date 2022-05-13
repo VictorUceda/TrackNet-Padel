@@ -171,8 +171,6 @@ def confusion(y_pred, y_true, tol):
             between ground truth and prediction
     """
     print("shape: "+str(y_pred.shape))
-    cv2.imwrite("y_pred.png", np.float32(y_pred[0]))
-    cv2.imwrite("y_true.png", np.float32(y_true[0]))
     batch_size = y_pred.shape[0]
     TP = TN = FP1 = FP2 = FN = 0
     for b in range(batch_size):
@@ -180,7 +178,8 @@ def confusion(y_pred, y_true, tol):
         h_pred = h_pred.astype('uint8')
         h_true = y_true[b]*255
         h_true = h_true.astype('uint8')
-        print(str(h_true)+" of "+str(batch_size))
+        cv2.imwrite("y_pred.png", h_pred[0])
+        cv2.imwrite("y_true.png", h_true[0])
         if np.amax(h_pred)==0 and np.amax(h_true)==0:
             TN += 1
         elif np.amax(h_pred)>0 and np.amax(h_true)==0:
