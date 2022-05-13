@@ -41,6 +41,7 @@ def video2img(video, csv, output_path, match):
         if count >= num_data:
             break
         label = csv_content[count]
+        print(str(count)+": "+str(label))
         if label[1] == 0:
             heat_map = genHeatMap(WIDTH, HEIGHT, -1, -1, sigma, mag)
         else:
