@@ -123,8 +123,8 @@ while success:
 		y_true.append(genHeatMap(WIDTH, HEIGHT, -1, -1, sigma, mag))
 	else:
 		print("prediction1 :"+str(WIDTH)+" "+str(HEIGHT)+" "+str(int(info[frame_no]['x']/ratio))+" "+str(int(info[frame_no]['y']/ratio)))
-		print("prediction2 :"+str(WIDTH)+" "+str(HEIGHT)+" "+str(int(info[frame_no]['x']*WIDTH/ratio))+" "+str(int(info[frame_no]['y']*HEIGHT/ratio)))
-		y_true.append(genHeatMap(WIDTH, HEIGHT, int(info[frame_no]['x']*WIDTH/ratio), int(info[frame_no]['y']*HEIGHT/ratio), sigma, mag))
+		print("prediction2 :"+str(WIDTH)+" "+str(HEIGHT)+" "+str(int(info[frame_no]['x']*WIDTH))+" "+str(int(info[frame_no]['y']*HEIGHT)))
+		y_true.append(genHeatMap(WIDTH, HEIGHT, int(info[frame_no]['x']*WIDTH), int(info[frame_no]['y']*HEIGHT), sigma, mag))
 
 	tp, tn, fp1, fp2, fn = confusion(y_pred, np.array(y_true), tol)
 	TP += tp
