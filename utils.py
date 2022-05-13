@@ -170,7 +170,8 @@ def confusion(y_pred, y_true, tol):
     tol --> acceptable tolerance of heat map circle center 
             between ground truth and prediction
     """
-    print("shape: "+str(y_pred.shape))
+    print("shape pre: "+str(y_pred.shape))
+    print("shape true: "+str(y_true.shape))
     batch_size = y_pred.shape[0]
     TP = TN = FP1 = FP2 = FN = 0
     for b in range(batch_size):
