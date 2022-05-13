@@ -125,7 +125,7 @@ while success:
 		print("prediction :"+str(WIDTH)+" "+str(HEIGHT)+" "+str(info[frame_no]['x']/ratio)+" "+str(info[frame_no]['y']/ratio))
 		y_true.append(genHeatMap(WIDTH, HEIGHT, int(info[frame_no]['x']/ratio), int(info[frame_no]['y']/ratio), sigma, mag))
 
-	tp, tn, fp1, fp2, fn = confusion(y_pred, [np.array(y_true)], tol)
+	tp, tn, fp1, fp2, fn = confusion(y_pred, np.array(y_true), tol)
 	TP += tp
 	TN += tn
 	FP1 += fp1
