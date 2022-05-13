@@ -82,9 +82,7 @@ print('Beginning predicting......')
 gray_imgs = deque()
 success, image = cap.read()
 ratio = image.shape[0] / HEIGHT
-print("ratio: "+str(ratio))
 size = (int(WIDTH*ratio), int(HEIGHT*ratio))
-print("size: "+str(size))
 fourcc = cv2.VideoWriter_fourcc(*'mp4v')
 out = cv2.VideoWriter(video_name+'_predict.mp4', fourcc, fps, size)
 out.write(image)
@@ -122,8 +120,6 @@ while success:
 	if info[frame_no]['Ball'] == 0:
 		y_true.append(genHeatMap(WIDTH, HEIGHT, -1, -1, sigma, mag))
 	else:
-		print("prediction1 :"+str(WIDTH)+" "+str(HEIGHT)+" "+str(int(info[frame_no]['x']/ratio))+" "+str(int(info[frame_no]['y']/ratio)))
-		print("prediction2 :"+str(WIDTH)+" "+str(HEIGHT)+" "+str(int(info[frame_no]['x']*WIDTH))+" "+str(int(info[frame_no]['y']*HEIGHT)))
 		y_true.append(genHeatMap(WIDTH, HEIGHT, int(info[frame_no]['x']*WIDTH), int(info[frame_no]['y']*HEIGHT), sigma, mag))
 
 	tp, tn, fp1, fp2, fn = confusion(y_pred, np.array(y_true), tol)
@@ -152,7 +148,6 @@ while success:
 
 		image_cp = np.copy(image)
 		cv2.circle(image_cp, (cx_pred, cy_pred), 5, (0,0,255), -1)
-		print("found :"+str(cx_pred)+" "+str(cy_pred))
 		out.write(image_cp)
 
 	success, image = cap.read()
