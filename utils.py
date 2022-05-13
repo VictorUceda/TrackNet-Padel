@@ -170,7 +170,7 @@ def confusion(y_pred, y_true, tol):
     tol --> acceptable tolerance of heat map circle center 
             between ground truth and prediction
     """
-    print("shape pre: "+str(y_pred.shape))
+    print("shape pre: "+str(y_pred[0].shape))
     print("shape true: "+str(np.array(y_true).shape))
     batch_size = y_pred.shape[0]
     TP = TN = FP1 = FP2 = FN = 0
@@ -180,7 +180,7 @@ def confusion(y_pred, y_true, tol):
         h_true = y_true[b]*255
         h_true = h_true.astype('uint8')
         cv2.imwrite("y_pred.png", h_pred[0])
-        cv2.imwrite("y_true.png", h_true[0])
+        cv2.imwrite("y_true.png", h_true)
         if np.amax(h_pred)==0 and np.amax(h_true)==0:
             TN += 1
         elif np.amax(h_pred)>0 and np.amax(h_true)==0:
