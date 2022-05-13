@@ -170,8 +170,8 @@ def confusion(y_pred, y_true, tol):
     tol --> acceptable tolerance of heat map circle center 
             between ground truth and prediction
     """
-    cv2.imwrite(y_pred, "y_pred.png")
-    cv2.imwrite(y_true, "y_true.png")
+    cv2.imwrite("y_pred.png", y_pred)
+    cv2.imwrite("y_true.png", y_true)
     batch_size = y_pred.shape[0]
     TP = TN = FP1 = FP2 = FN = 0
     for b in range(batch_size):
