@@ -171,7 +171,7 @@ def confusion(y_pred, y_true, tol):
             between ground truth and prediction
     """
     print("shape pre: "+str(y_pred.shape))
-    print("shape true: "+str(y_true.shape))
+    print("shape true: "+str(np.array(y_true).shape))
     batch_size = y_pred.shape[0]
     TP = TN = FP1 = FP2 = FN = 0
     for b in range(batch_size):
