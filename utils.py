@@ -171,8 +171,8 @@ def confusion(y_pred, y_true, tol):
             between ground truth and prediction
     """
     print("shape: "+str(y_pred.shape))
-    #cv2.imwrite("y_pred.png", np.float32(y_pred))
-    #cv2.imwrite("y_true.png", np.float32(y_true))
+    cv2.imwrite("y_pred.png", np.float32(y_pred[0]))
+    cv2.imwrite("y_true.png", np.float32(y_true[0]))
     batch_size = y_pred.shape[0]
     TP = TN = FP1 = FP2 = FN = 0
     for b in range(batch_size):
