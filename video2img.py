@@ -44,7 +44,7 @@ def video2img(video, csv, output_path, match):
         if label[1] == 0:
             heat_map = genHeatMap(WIDTH, HEIGHT, -1, -1, sigma, mag)
         else:
-            heat_map = genHeatMap(WIDTH, HEIGHT, int(label[2]/ratio), int(label[3]/ratio), sigma, mag)
+            heat_map = genHeatMap(WIDTH, HEIGHT, int(label[2]*WIDTH), int(label[3]*HEIGHT), sigma, mag)
         
         image = cv2.resize(image, (WIDTH, HEIGHT))
         heat_map = (heat_map*255).astype('uint8')
