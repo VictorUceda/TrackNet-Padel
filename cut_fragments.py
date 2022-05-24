@@ -6,14 +6,10 @@ import numpy as np
 import pandas as pd
 
 
-
 args = parser.parse_args()
 input_video_path = args.label_video_path
 output_path =  args.output_segments_path
 output_name = ntpath.basename(input_video_path)[:-4]
-
-
-
 
 if output_path == "":
     exit()
@@ -34,6 +30,8 @@ for index, row in df_segments.iterrows():
     print(row['ini'], row['fin'])
     segments.append([row['ini'], row['fin']])
     i += 1
+
+prnt(segments)
 
 #save prediction images as vidoe
 #Tutorial: https://stackoverflow.com/questions/33631489/error-during-saving-a-video-using-python-and-opencv
@@ -66,6 +64,7 @@ while(True):
   videoWriter.write(img)
 
   currentFrame += 1
+  if not currentFrame % 100: print(currentFrame)
 
 
 # everything is done, release the video
