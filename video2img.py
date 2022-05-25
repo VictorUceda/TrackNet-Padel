@@ -60,6 +60,7 @@ if __name__ == '__main__':
     csvs = sorted(glob.glob(os.path.join(raw_dir, '*.csv')))
 
     print(videos)
+    print(csvs)
 
     match = 1
     print("==========Convert Start==========")
