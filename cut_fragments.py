@@ -31,8 +31,6 @@ for index, row in df_segments.iterrows():
     segments.append([row['ini'], row['fin']])
     i += 1
 
-print(segments)
-
 #save prediction images as vidoe
 #Tutorial: https://stackoverflow.com/questions/33631489/error-during-saving-a-video-using-python-and-opencv
 fourcc = cv2.VideoWriter_fourcc(*'mp4v')

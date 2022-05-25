@@ -46,7 +46,7 @@ def video2img(video, csv, output_path, match):
             heat_map = genHeatMap(WIDTH, HEIGHT, -1, -1, sigma, mag)
         else:
             heat_map = genHeatMap(WIDTH, HEIGHT, int(label[2]*WIDTH), int(label[3]*HEIGHT), sigma, mag)
-        
+
         image = cv2.resize(image, (WIDTH, HEIGHT))
         heat_map = (heat_map*255).astype('uint8')
         cv2.imwrite(os.sep.join([output_path, 'x_data', name+'_%d.jpg' %(count)]), image)
@@ -58,6 +58,8 @@ if __name__ == '__main__':
     raw_dir = 'raw_data'
     videos = sorted(glob.glob(os.path.join(raw_dir, '*.mp4')))
     csvs = sorted(glob.glob(os.path.join(raw_dir, '*.csv')))
+
+    print(videos)
 
     match = 1
     print("==========Convert Start==========")
