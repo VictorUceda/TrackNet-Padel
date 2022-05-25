@@ -67,6 +67,7 @@ if __name__ == '__main__':
         v_name = os.path.split(video)[-1]
         csv_name = os.path.split(csv)[-1]
         if v_name[:-4] != csv_name[:-4]:
+            print(v_name[:-4] + " -csv: "+ csv_name[:-4])
             raise NameError("Video files and csv files are not corresponded")
 
         print("Convert Video: {}".format(video))
