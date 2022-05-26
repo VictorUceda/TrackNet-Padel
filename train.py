@@ -26,8 +26,8 @@ WIDTH = args.WIDTH
 BATCH_SIZE = args.batch_size
 FRAME_STACK = args.frame_stack
 pre_trained = args.pre_trained
-
-optimizer = keras.optimizers.Adadelta(lr=args.lr)
+print("lerning rate: "+str(args.lr))
+optimizer = keras.optimizers.Adadelta(learning_rate=args.lr)
 if not pre_trained:
 	model=ResNet_Track(input_shape=(FRAME_STACK, HEIGHT, WIDTH))
 	model.compile(loss=BinaryFocalLoss(gamma=2), optimizer=optimizer, metrics=[keras.metrics.BinaryAccuracy()]) 
