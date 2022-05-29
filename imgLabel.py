@@ -32,15 +32,9 @@ if load_csv:
     info = load_info(csv_path)
     if len(info) != n_frames:
         print("Number of frames in video and dictionary are not the same! "+str(len(info))+" vs "+str(n_frames))
-        print("Fail to load, create new dictionary instead.")
-        info = {
-            idx:{
-            'Frame': idx,
-            'Ball': 0,
-            'x': -1,
-            'y': -1
-            } for idx in range(n_frames)
-        }
+        #print("Fail to load, create new dictionary instead.")
+        for i in range(len(info), n_frames):
+            info[i] = {'Frame': i, 'Ball': 0, 'x': -1, 'y': -1}
     else:
         print("Load labeled dictionary successfully.")
 else:
