@@ -149,9 +149,9 @@ while success:
 				max_area = area
 		target = rects[max_area_idx]
 		(cx_pred, cy_pred) = (int(ratio*(target[0] + target[2] / 2)), int(ratio*(target[1] + target[3] / 2)))
-		ballpos[frame_no]= (cx_pred/image.shape[0], cy_pred/image.shape[1])
-		ball_pos_str += str(frame_no)+',1,'+str(cx_pred/image.shape[0])+','+str(cy_pred/image.shape[1])+'\n'
-		print(cx_pred, image.shape[0])
+		ballpos[frame_no]= (cx_pred/size[0], cy_pred/size[1])
+		ball_pos_str += str(frame_no)+',1,'+str(cx_pred/size[0])+','+str(cy_pred/size[1])+'\n'
+		print(cx_pred, size)
 		image_cp = np.copy(image)
 		cv2.circle(image_cp, (cx_pred, cy_pred), 5, (0,0,255), -1)
 		out.write(image_cp)
