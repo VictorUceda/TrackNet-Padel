@@ -89,10 +89,10 @@ out.write(image)
 img = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 img = np.expand_dims(img, axis=2)
 gray_imgs.append(img)
-for _ in range(FRAME_STACK-1):
+for k in range(FRAME_STACK-1):
 	success, image = cap.read()
 	out.write(image)
-
+	ball_pos_str = str(k)+',0,-1.000,-1.000\n'
 	img = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 	img = np.expand_dims(img, axis=2)
 	gray_imgs.append(img)
@@ -151,7 +151,6 @@ while success:
 		(cx_pred, cy_pred) = (int(ratio*(target[0] + target[2] / 2)), int(ratio*(target[1] + target[3] / 2)))
 		ballpos[frame_no]= (cx_pred/size[0], cy_pred/size[1])
 		ball_pos_str += str(frame_no)+',1,'+str(cx_pred/size[0])+','+str(cy_pred/size[1])+'\n'
-		print(cx_pred, size)
 		image_cp = np.copy(image)
 		cv2.circle(image_cp, (cx_pred, cy_pred), 5, (0,0,255), -1)
 		out.write(image_cp)
@@ -187,4 +186,4 @@ print('Done......')
 name_csv = video_path[:-4]+'.csv'
 with open(name_csv, "w") as fp:
 	fp.write(ball_pos_str)
-print(ball_pos_str)
+#print(ball_pos_str)
