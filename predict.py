@@ -136,6 +136,7 @@ while success:
 	if np.amax(h_pred) <= 0:
 		out.write(image)
 		ballpos[frame_no] = (-1.000,-1.000)
+		ball_pos_str += str(frame_no)+',0,-1.000,-1.000\n'
 	else:
 		cnts, _ = cv2.findContours(h_pred[0].copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 		rects = [cv2.boundingRect(ctr) for ctr in cnts]
@@ -149,6 +150,7 @@ while success:
 		target = rects[max_area_idx]
 		(cx_pred, cy_pred) = (int(ratio*(target[0] + target[2] / 2)), int(ratio*(target[1] + target[3] / 2)))
 		ballpos[frame_no]= (cx_pred/image.shape[0], cy_pred/image.shape[1])
+		ball_pos_str += str(frame_no)+',1,'+str(cx_pred/image.shape[0])+','+str(cy_pred/image.shape[1])+'\n'
 		image_cp = np.copy(image)
 		cv2.circle(image_cp, (cx_pred, cy_pred), 5, (0,0,255), -1)
 		out.write(image_cp)
@@ -181,4 +183,7 @@ if compute:
 	print('(ACC + Pre + Rec)/3:', avg_acc)
 
 print('Done......')
-print(ballpos)
+name_csv = video_path[:-4]+'.csv'
+with open(name_csv, "w") as fp:
+	fp.write(ball_pos_str)
+print(ball_pos_str)
