@@ -92,7 +92,7 @@ gray_imgs.append(img)
 for k in range(FRAME_STACK-1):
 	success, image = cap.read()
 	out.write(image)
-	ball_pos_str = str(k)+',0,-1.000,-1.000\n'
+	ball_pos_str += str(k)+',0,-1.000,-1.000\n'
 	img = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 	img = np.expand_dims(img, axis=2)
 	gray_imgs.append(img)
