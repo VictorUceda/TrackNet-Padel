@@ -55,31 +55,31 @@ for i in range(args.epochs):
 	loss = sum(history.history['loss'])
 	losses.append(loss)
 	
-	# validation
-	TP = TN = FP1 = FP2 = FN = 0
-	test_iter = iter(data_generator2(BATCH_SIZE, x_test, y_test, FRAME_STACK, BACK_FRAME_STACK))
-	test_steps = min(check_steps(x_test, BATCH_SIZE, FRAME_STACK),400)
-	print("==========Epoch {} start validation========== ".format(i)+str(test_steps))
-	for j in range(test_steps):
-		x_batch, y_batch = next(test_iter)
-		y_pred = model.predict(x_batch, batch_size=BATCH_SIZE)
-		y_pred = y_pred > 0.5
-		y_pred = y_pred.astype('float32')
+    if i%2:  # validation
+        TP = TN = FP1 = FP2 = FN = 0
+        test_iter = iter(data_generator2(BATCH_SIZE, x_test, y_test, FRAME_STACK, BACK_FRAME_STACK))
+        test_steps = min(check_steps(x_test, BATCH_SIZE, FRAME_STACK),400)
+        print("==========Epoch {} start validation========== ".format(i)+str(test_steps))
+        for j in range(test_steps):
+            x_batch, y_batch = next(test_iter)
+            y_pred = model.predict(x_batch, batch_size=BATCH_SIZE)
+            y_pred = y_pred > 0.5
+            y_pred = y_pred.astype('float32')
 
-		tp, tn, fp1, fp2, fn = confusion(y_pred, y_batch[:, 0,...], tol)
-		TP += tp
-		TN += tn
-		FP1 += fp1
-		FP2 += fp2
-		FN += fn
-	
-	accuracy, precision, recall = compute_acc((TP, TN, FP1, FP2, FN))
-	avg_acc = (accuracy + precision + recall)/3
-	print("Epoch {} accuracy: {:.3f}".format(i, accuracy))
-	print("Epoch {} precision: {:.3f}".format(i, precision))
-	print("Epoch {} recall: {:.3f}".format(i, recall))
-	print("Epoch {} average = (accuracy + precision + recall)/3: {:.3f}".format(i, avg_acc))
-	
+            tp, tn, fp1, fp2, fn = confusion(y_pred, y_batch[:, 0,...], tol)
+            TP += tp
+            TN += tn
+            FP1 += fp1
+            FP2 += fp2
+            FN += fn
+
+        accuracy, precision, recall = compute_acc((TP, TN, FP1, FP2, FN))
+        avg_acc = (accuracy + precision + recall)/3
+        print("Epoch {} accuracy: {:.3f}".format(i, accuracy))
+        print("Epoch {} precision: {:.3f}".format(i, precision))
+        print("Epoch {} recall: {:.3f}".format(i, recall))
+        print("Epoch {} average = (accuracy + precision + recall)/3: {:.3f}".format(i, avg_acc))
+
 	# learnging rate callback and saving model
 	if loss < best_loss - args.min_delta:
 		wait = 0
