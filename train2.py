@@ -45,10 +45,10 @@ wait = 0
 best_loss = float('inf')
 losses = []
 for i in range(args.epochs):
-	x_train, x_test, y_train, y_test = split_train_test(match_list, ratio=args.split_ratio, shuffle=True)
-	train_steps = check_steps(x_train+x_test, BATCH_SIZE, FRAME_STACK)
+	x_train, x_test, y_train, y_test = split_train_test2(match_list, FRAME_STACK, BACK_FRAME_STACK, ratio=args.split_ratio, shuffle=True)
+	train_steps = min(check_steps(x_train+x_test, BATCH_SIZE, FRAME_STACK), 200)
 	print("==========Epoch {}, Train steps: {}, Learning rate: {:.4f}==========".format(i, train_steps, float(K.get_value(model.optimizer.lr))))
-	history = model.fit(data_generator(BATCH_SIZE, x_train+x_test, y_train+y_test, FRAME_STACK, BACK_FRAME_STACK), 
+	history = model.fit(data_generator2(BATCH_SIZE, x_train, y_train, FRAME_STACK, BACK_FRAME_STACK), 
 						steps_per_epoch=train_steps/5,
 						epochs=1,
 						verbose=1)
@@ -57,7 +57,7 @@ for i in range(args.epochs):
 	
 	# validation
 	TP = TN = FP1 = FP2 = FN = 0
-	test_iter = iter(data_generator(BATCH_SIZE, x_test, y_test, FRAME_STACK, BACK_FRAME_STACK))
+	test_iter = iter(data_generator2(BATCH_SIZE, x_test, y_test, FRAME_STACK, BACK_FRAME_STACK))
 	test_steps = check_steps(x_test, BATCH_SIZE, FRAME_STACK)
 	print("==========Epoch {} start validation==========".format(i))
 	for j in range(test_steps):
