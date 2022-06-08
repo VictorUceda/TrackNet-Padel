@@ -156,6 +156,61 @@ def data_generator(batch_size, x_list, y_list, frame_stack, back_frame_stack=0):
         
         yield np.array(batch_imgs), np.array(batch_hmaps)
 
+def read_img_pack(im_path, frame_stack, back_frame_stack):
+    i = int(im_path.split('_')[-1].split('.')[0])
+    res = []
+    for j in range(frame_stack):
+        h = i - (frame_stack-back_frame_stack)-1 + j
+        path = '_'.join(im_path.split('_')[:-1]) + str(h) + '.' + im_path.split('_')[-1].split('.')[-1]
+        res.append(read_img(path))
+    return res
+
+
+def data_generator2(batch_size, x_list, y_list, frame_stack, back_frame_stack=0):
+    """
+    Custom data generator to stack n frames for 'one' input
+
+    param:
+    batch_size --> batch size
+    x_list --> image path list
+    y_list --> heat map path list
+    frame_stack --> number of frames to stack for one input
+    """
+    #x_list = sorted(x_list, key=lambda e: int(e.split('/')[-1].split('_')[0][5:])*1000000+int(e.split('_')[-1].split('.')[0]))
+    #y_list = sorted(y_list, key=lambda e: int(e.split('/')[-1].split('_')[0][5:])*1000000+int(e.split('_')[-1].split('.')[0]))
+    data_size = len(x_list)
+    
+    # initialize images and heatmaps array
+    END = False
+    end = (frame_stack-1) + (batch_size-1)
+    images = read_img_pack(x_list[0], frame_stack, back_frame_stack)#[read_img(path) for path in x_list[:frame_stack]]
+    hmap = read_img(y_list[0], hmap=True)
+    index = 0
+    while True:
+        batch_imgs = []
+        batch_hmaps = []
+		
+		# dynamically pop and append a new image to avoid multiple reading
+        for _ in range(batch_size):
+            images = read_img_pack(x_list[index], frame_stack, back_frame_stack)
+            img = np.concatenate(images, axis=0)
+            batch_imgs.append(img)
+            
+            hmap = read_img(y_list[index], hmap=True)
+            batch_hmaps.append(hmap)
+            
+            index += 1
+            if index >= data_size-1:
+                END = True
+                break
+			
+        if END:
+            END=False
+            index = 0
+            continue
+        
+        yield np.array(batch_imgs), np.array(batch_hmaps)
+
 def confusion(y_pred, y_true, tol):
     """
     compute confusion matrix value
