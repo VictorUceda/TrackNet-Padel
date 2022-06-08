@@ -193,11 +193,14 @@ def data_generator(batch_size, x_list, y_list, frame_stack, back_frame_stack=0):
         yield np.array(batch_imgs), np.array(batch_hmaps)
 
 def read_img_pack(im_path, frame_stack, back_frame_stack):
+    
     i = int(im_path.split('_')[-1].split('.')[0])
+    print(im_path+" "+str(i))
     res = []
     for j in range(frame_stack):
         h = i - (frame_stack-back_frame_stack)-1 + j
         path = '_'.join(im_path.split('_')[:-1]) + str(h) + '.' + im_path.split('_')[-1].split('.')[-1]
+        print(str(h)+" "+path)
         res.append(read_img(path))
     return res
 
