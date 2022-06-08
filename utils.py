@@ -113,7 +113,7 @@ def data_generator(batch_size, x_list, y_list, frame_stack, back_frame_stack=0):
     y_list = sorted(y_list)
     data_size = len(x_list)
 
-	print("batch_size: "+str(batch_size))
+    print("batch_size: "+str(batch_size))
     # initialize images and heatmaps array
     END = False
     end = (frame_stack-1) + (batch_size-1)
@@ -132,7 +132,7 @@ def data_generator(batch_size, x_list, y_list, frame_stack, back_frame_stack=0):
 
             batch_hmaps.append(hmap)
             hmap = read_img(y_list[end-back_frame_stack], hmap=True)
-			print("end: "+str(end))
+            print("end: "+str(end))
             end += 1
             if end >= data_size:
                 END = True
