@@ -79,8 +79,10 @@ def split_train_test2(match_list, frame_stack, back_frame_stack=0, ratio=0.9, sh
     x_test, y_test = [], []
     for match in match_list:
         imgs = glob(os.path.join(match, 'x_data', '*.jpg'))
+        imgs = sorted(imgs, key=lambda e: int(e.split('/')[-1].split('_')[0][5:])*1000000+int(e.split('_')[-1].split('.')[0]))
         imgs = [p for p in imgs if int(p.split('_')[-1].split('.')[0]) >= (frame_stack-back_frame_stack-1) and int(p.split('_')[-1].split('.')[0]) <= (len(imgs)-back_frame_stack-1)]
         hmaps = glob(os.path.join(match, 'y_data', '*.jpg'))
+        hmaps = sorted(hmaps, key=lambda e: int(e.split('/')[-1].split('_')[0][5:])*1000000+int(e.split('_')[-1].split('.')[0]))
         hmaps = [p for p in hmaps if int(p.split('_')[-1].split('.')[0]) >= (frame_stack-back_frame_stack-1) and int(p.split('_')[-1].split('.')[0]) <= (len(imgs)-back_frame_stack-1)]
         
         x.extend(imgs)
