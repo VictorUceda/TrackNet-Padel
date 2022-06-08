@@ -104,6 +104,7 @@ def read_img(file, hmap=False):
     file --> path of image file
     hmap --> boolean to indicate whether image is heat map or not
     """
+    print(file)
     img = cv2.imread(file)
     if hmap:
         img = img[:,:,0]
