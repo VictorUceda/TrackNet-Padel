@@ -94,10 +94,7 @@ def split_train_test2(match_list, frame_stack, back_frame_stack=0, ratio=0.9, sh
     x_train = x[:int(n_cases*ratio)]
     x_test = x[int(n_cases*ratio):]
     y_train = y[:int(n_cases*ratio)]
-    print(str(int(n_cases*ratio)))
     y_test = y[int(n_cases*ratio):]
-    print(str(len(y_test)))
-    print(str(len(y_train)))
 
     return x_train, x_test, y_train, y_test
 
