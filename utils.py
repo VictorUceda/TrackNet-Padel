@@ -73,8 +73,6 @@ def split_train_test2(match_list, frame_stack, back_frame_stack=0, ratio=0.9, sh
     """
         
     n_match = len(match_list)
-    train_match = match_list[:int(n_match*ratio)]
-    test_match = match_list[int(n_match*ratio):]
     x, y = [], []
     x_test, y_test = [], []
     for match in match_list:
@@ -92,10 +90,11 @@ def split_train_test2(match_list, frame_stack, back_frame_stack=0, ratio=0.9, sh
         temp = list(zip(x, y))
         random.shuffle(temp)
         x, y = zip(*temp)
-    x_train = x[:int(n_match*ratio)]
-    x_test = x[int(n_match*ratio):]
-    y_train = y[:int(n_match*ratio)]
-    y_test = y[int(n_match*ratio):]
+    x_train = x[:int(n_match*ratio)].copy()
+    x_test = x[int(n_match*ratio):].copy()
+    y_train = y[:int(n_match*ratio)].copy()
+    print(str(int(n_match*ratio)))
+    y_test = y[int(n_match*ratio):].copy()
 
     return x_train, x_test, y_train, y_test
 
