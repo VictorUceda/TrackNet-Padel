@@ -61,6 +61,41 @@ def split_train_test(match_list, ratio=0.9, shuffle=True):
 
     return x_train, x_test, y_train, y_test
 
+def split_train_test2(match_list, frame_stack, back_frame_stack=0, ratio=0.9, shuffle=True):
+    """
+    Split dataset into training and testing based on match list
+
+    param:
+    match_list --> list of match folder path
+    ratio --> split ratio
+    shuffle --> boolean to indicate whether to shuffle match_list 
+                before generating dataset lists
+    """
+        
+    n_match = len(match_list)
+    train_match = match_list[:int(n_match*ratio)]
+    test_match = match_list[int(n_match*ratio):]
+    x, y = [], []
+    x_test, y_test = [], []
+    for match in match_list:
+        imgs = glob(os.path.join(match, 'x_data', '*.jpg'))
+        imgs = [p for p in imgs if int(p.split('_')[-1].split('.')[0]) >= (frame_stack-back_frame_stack-1) and int(p.split('_')[-1].split('.')[0]) <= (len(imgs)-back_frame_stack-1)]
+        hmaps = glob(os.path.join(match, 'y_data', '*.jpg'))
+        hmaps = [p for p in hmaps if int(p.split('_')[-1].split('.')[0]) >= (frame_stack-back_frame_stack-1) and int(p.split('_')[-1].split('.')[0]) <= (len(imgs)-back_frame_stack-1)]
+        
+        x.extend(imgs)
+        y.extend(hmaps)
+    if shuffle:
+        temp = list(zip(x, y))
+        random.shuffle(temp)
+        x, y = zip(*temp)
+    x_train = x[:int(n_match*ratio)]
+    x_test = x[int(n_match*ratio):]
+    y_train = y[:int(n_match*ratio)]
+    y_test = y[int(n_match*ratio):]
+
+    return x_train, x_test, y_train, y_test
+
 def read_img(file, hmap=False):
     """
     Read image from path and convert to format suitable for model
