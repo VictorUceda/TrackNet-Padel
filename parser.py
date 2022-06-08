@@ -20,6 +20,8 @@ parser.add_argument('--batch_size', type=int, default=2,
                     help='batch size(default: 2)')
 parser.add_argument('--frame_stack', type=int, default=3,
                     help='number of frames to be stacked(default: 3)')
+parser.add_argument('--back_frame_stack', type=int, default=0,
+                    help='number of frames in frame_stack to be taken after the current frame (default: 0)')
 parser.add_argument('--save_weights', type=str, default='weights/TrackNet',
                     help='path for saving trained weights(default: weights/TrackNet)')
 parser.add_argument('--match_folder', type=str, default='train_data',
