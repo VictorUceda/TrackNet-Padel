@@ -72,7 +72,7 @@ for i in range(args.epochs):
 		FP1 += fp1
 		FP2 += fp2
 		FN += fn
-        print(str(j)+"->"+str(tp))
+		print(str(j)+"->"+str(tp))
 	
 	accuracy, precision, recall = compute_acc((TP, TN, FP1, FP2, FN))
 	avg_acc = (accuracy + precision + recall)/3
