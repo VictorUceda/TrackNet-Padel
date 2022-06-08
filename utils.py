@@ -109,8 +109,8 @@ def data_generator(batch_size, x_list, y_list, frame_stack, back_frame_stack=0):
     y_list --> heat map path list
     frame_stack --> number of frames to stack for one input
     """
-    x_list = sorted(x_list, lambda e: int(e.split('_')[-1].split('.')[0]))
-    y_list = sorted(y_list, lambda e: int(e.split('_')[-1].split('.')[0]))
+    x_list = sorted(x_list, key=lambda e: int(e.split('_')[-1].split('.')[0]))
+    y_list = sorted(y_list, key=lambda e: int(e.split('_')[-1].split('.')[0]))
     data_size = len(x_list)
     print(x_list)
     # initialize images and heatmaps array
