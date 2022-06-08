@@ -55,6 +55,7 @@ def split_train_test(match_list, ratio=0.9, shuffle=True):
     x_test, y_test = [], []
     for match in test_match:
         test_imgs = glob(os.path.join(match, 'x_data', '*.jpg'))
+        print(test_imgs)
         test_hmaps = glob(os.path.join(match, 'y_data', '*.jpg'))
         x_test.extend(test_imgs)
         y_test.extend(test_hmaps)
