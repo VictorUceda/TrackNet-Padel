@@ -59,7 +59,7 @@ for i in range(args.epochs):
 	TP = TN = FP1 = FP2 = FN = 0
 	test_iter = iter(data_generator2(BATCH_SIZE, x_test, y_test, FRAME_STACK, BACK_FRAME_STACK))
 	test_steps = check_steps(x_test, BATCH_SIZE, FRAME_STACK)
-	print("==========Epoch {} start validation==========".format(i))
+	print("==========Epoch {} start validation========== ".format(i)+str(test_steps))
 	for j in range(test_steps):
 		x_batch, y_batch = next(test_iter)
 		y_pred = model.predict(x_batch, batch_size=BATCH_SIZE)
@@ -72,6 +72,7 @@ for i in range(args.epochs):
 		FP1 += fp1
 		FP2 += fp2
 		FN += fn
+        print(str(j)+"->"+str(tp))
 	
 	accuracy, precision, recall = compute_acc((TP, TN, FP1, FP2, FN))
 	avg_acc = (accuracy + precision + recall)/3
