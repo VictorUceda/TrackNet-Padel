@@ -99,7 +99,7 @@ def check_steps(img_paths, batch_size, frame_stack):
     
     return n_steps - 1
 
-def data_generator(batch_size, x_list, y_list, frame_stack):
+def data_generator(batch_size, x_list, y_list, frame_stack, back_frame_stack=0):
     """
     Custom data generator to stack n frames for 'one' input
 
@@ -113,11 +113,12 @@ def data_generator(batch_size, x_list, y_list, frame_stack):
     y_list = sorted(y_list)
     data_size = len(x_list)
 
-	# initialize images and heatmaps array
+	print("batch_size: "+str(batch_size))
+    # initialize images and heatmaps array
     END = False
     end = (frame_stack-1) + (batch_size-1)
     images = [read_img(path) for path in x_list[:frame_stack]]
-    hmap = read_img(y_list[frame_stack-1], hmap=True)
+    hmap = read_img(y_list[frame_stack-1-back_frame_stack], hmap=True)
     while True:
         batch_imgs = []
         batch_hmaps = []
@@ -130,8 +131,8 @@ def data_generator(batch_size, x_list, y_list, frame_stack):
             images.append(read_img(x_list[end]))
 
             batch_hmaps.append(hmap)
-            hmap = read_img(y_list[end], hmap=True)
-			
+            hmap = read_img(y_list[end-back_frame_stack], hmap=True)
+			print("end: "+str(end))
             end += 1
             if end >= data_size:
                 END = True
@@ -142,14 +143,14 @@ def data_generator(batch_size, x_list, y_list, frame_stack):
             curr_info = os.path.split(x_list[end-1])[-1].split('_')
             if next_info[:-1] != curr_info[:-1]:
                 images = [read_img(path) for path in x_list[end:end+frame_stack]]
-                heat_maps = read_img(y_list[end+(frame_stack-1)], hmap=True)
+                heat_maps = read_img(y_list[end+(frame_stack-1-back_frame_stack)], hmap=True)
                 end += frame_stack
                 break
         if END:
             END=False
             end = (frame_stack-1) + (batch_size-1)
             images = [read_img(path) for path in x_list[:frame_stack]]
-            hmap = read_img(y_list[frame_stack-1], hmap=True)
+            hmap = read_img(y_list[frame_stack-1-back_frame_stack], hmap=True)
             continue
         
         yield np.array(batch_imgs), np.array(batch_hmaps)
