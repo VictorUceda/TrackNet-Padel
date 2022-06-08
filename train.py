@@ -25,7 +25,7 @@ HEIGHT = args.HEIGHT
 WIDTH = args.WIDTH
 BATCH_SIZE = args.batch_size
 FRAME_STACK = args.frame_stack
-BACK_FRAME_STACK = int(FRAME_STACK/2)
+BACK_FRAME_STACK = args.back_frame_stack
 pre_trained = args.pre_trained
 print("lerning rate: "+str(args.lr))
 optimizer = keras.optimizers.Adadelta(learning_rate=args.lr)
