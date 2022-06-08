@@ -73,12 +73,12 @@ for i in range(args.epochs):
 			FP2 += fp2
 			FN += fn
 
-			accuracy, precision, recall = compute_acc((TP, TN, FP1, FP2, FN))
-			avg_acc = (accuracy + precision + recall)/3
-			print("Epoch {} accuracy: {:.3f}".format(i, accuracy))
-			print("Epoch {} precision: {:.3f}".format(i, precision))
-			print("Epoch {} recall: {:.3f}".format(i, recall))
-			print("Epoch {} average = (accuracy + precision + recall)/3: {:.3f}".format(i, avg_acc))
+		accuracy, precision, recall = compute_acc((TP, TN, FP1, FP2, FN))
+		avg_acc = (accuracy + precision + recall)/3
+		print("Epoch {} accuracy: {:.3f}".format(i, accuracy))
+		print("Epoch {} precision: {:.3f}".format(i, precision))
+		print("Epoch {} recall: {:.3f}".format(i, recall))
+		print("Epoch {} average = (accuracy + precision + recall)/3: {:.3f}".format(i, avg_acc))
 
 	# learnging rate callback and saving model
 	if loss < best_loss - args.min_delta:
