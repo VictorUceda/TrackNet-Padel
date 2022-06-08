@@ -198,7 +198,7 @@ def read_img_pack(im_path, frame_stack, back_frame_stack):
     print(im_path+" "+str(i))
     res = []
     for j in range(frame_stack):
-        h = i - (frame_stack-back_frame_stack)-1 + j
+        h = i - (frame_stack-back_frame_stack-1) + j
         path = '_'.join(im_path.split('_')[:-1]) + "_" + str(h) + '.' + im_path.split('_')[-1].split('.')[-1]
         print(str(h)+" "+path)
         res.append(read_img(path))
