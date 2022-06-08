@@ -104,7 +104,7 @@ def read_img(file, hmap=False):
     file --> path of image file
     hmap --> boolean to indicate whether image is heat map or not
     """
-    print(file)
+    #print(file)
     img = cv2.imread(file)
     if hmap:
         img = img[:,:,0]
@@ -216,9 +216,9 @@ def data_generator2(batch_size, x_list, y_list, frame_stack, back_frame_stack=0)
     
     # initialize images and heatmaps array
     END = False
-    end = (frame_stack-1) + (batch_size-1)
-    images = read_img_pack(x_list[0], frame_stack, back_frame_stack)#[read_img(path) for path in x_list[:frame_stack]]
-    hmap = read_img(y_list[0], hmap=True)
+    #end = (frame_stack-1) + (batch_size-1)
+    #images = read_img_pack(x_list[0], frame_stack, back_frame_stack)#[read_img(path) for path in x_list[:frame_stack]]
+    #hmap = read_img(y_list[0], hmap=True)
     index = 0
     while True:
         batch_imgs = []
