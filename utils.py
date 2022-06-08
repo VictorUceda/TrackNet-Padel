@@ -148,7 +148,7 @@ def data_generator(batch_size, x_list, y_list, frame_stack, back_frame_stack=0):
     x_list = sorted(x_list, key=lambda e: int(e.split('/')[-1].split('_')[0][5:])*1000000+int(e.split('_')[-1].split('.')[0]))
     y_list = sorted(y_list, key=lambda e: int(e.split('/')[-1].split('_')[0][5:])*1000000+int(e.split('_')[-1].split('.')[0]))
     data_size = len(x_list)
-    print(x_list)
+
     # initialize images and heatmaps array
     END = False
     end = (frame_stack-1) + (batch_size-1)
@@ -163,13 +163,11 @@ def data_generator(batch_size, x_list, y_list, frame_stack, back_frame_stack=0):
             img = np.concatenate(images, axis=0)
             batch_imgs.append(img)
             images.pop(0)
-            print("img: "+str(x_list[end]))
             images.append(read_img(x_list[end]))
 
             batch_hmaps.append(hmap)
-            print("hmap: "+str(y_list[end-back_frame_stack]))
             hmap = read_img(y_list[end-back_frame_stack], hmap=True)
-            print("end: "+str(end))
+
             end += 1
             if end >= data_size:
                 END = True
@@ -193,14 +191,11 @@ def data_generator(batch_size, x_list, y_list, frame_stack, back_frame_stack=0):
         yield np.array(batch_imgs), np.array(batch_hmaps)
 
 def read_img_pack(im_path, frame_stack, back_frame_stack):
-    
     i = int(im_path.split('_')[-1].split('.')[0])
-    print(im_path+" "+str(i))
     res = []
     for j in range(frame_stack):
         h = i - (frame_stack-back_frame_stack-1) + j
         path = '_'.join(im_path.split('_')[:-1]) + "_" + str(h) + '.' + im_path.split('_')[-1].split('.')[-1]
-        print(str(h)+" "+path)
         res.append(read_img(path))
     return res
 
