@@ -49,7 +49,7 @@ for i in range(args.epochs):
 	train_steps = min(check_steps(x_train+x_test, BATCH_SIZE, FRAME_STACK), 200)
 	print("==========Epoch {}, Train steps: {}, Learning rate: {:.4f}==========".format(i, train_steps, float(K.get_value(model.optimizer.lr))))
 	history = model.fit(data_generator2(BATCH_SIZE, x_train, y_train, FRAME_STACK, BACK_FRAME_STACK), 
-						steps_per_epoch=train_steps/5,
+						steps_per_epoch=train_steps,
 						epochs=1,
 						verbose=1)
 	loss = sum(history.history['loss'])
