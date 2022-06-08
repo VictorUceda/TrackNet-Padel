@@ -46,7 +46,7 @@ best_loss = float('inf')
 losses = []
 for i in range(args.epochs):
 	x_train, x_test, y_train, y_test = split_train_test2(match_list, FRAME_STACK, BACK_FRAME_STACK, ratio=args.split_ratio, shuffle=True)
-	train_steps = min(check_steps(x_train+x_test, BATCH_SIZE, FRAME_STACK), 1000)
+	train_steps = min(check_steps(x_train+x_test, BATCH_SIZE, FRAME_STACK), 1500)
 	print("==========Epoch {}, Train steps: {}, Learning rate: {:.4f}==========".format(i, train_steps, float(K.get_value(model.optimizer.lr))))
 	history = model.fit(data_generator2(BATCH_SIZE, x_train, y_train, FRAME_STACK, BACK_FRAME_STACK), 
 						steps_per_epoch=train_steps,
