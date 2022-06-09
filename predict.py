@@ -23,6 +23,7 @@ HEIGHT = args.HEIGHT
 WIDTH = args.WIDTH
 BATCH_SIZE = 1
 FRAME_STACK = args.frame_stack
+BACK_FRAME_STACK = args.back_frame_stack
 load_weights = args.load_weights
 video_path = args.video_path
 csv_path = args.label_path
@@ -92,19 +93,19 @@ gray_imgs.append(img)
 for k in range(FRAME_STACK-1):
 	success, image = cap.read()
 	out.write(image)
-	ball_pos_str += str(k)+',0,-1.000,-1.000\n'
+	if k < FRAME_STACK-BACK_FRAME_STACK-1: ball_pos_str += str(k)+',0,-1.000,-1.000\n'
 	img = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 	img = np.expand_dims(img, axis=2)
 	gray_imgs.append(img)
 
-frame_no = FRAME_STACK-1
+frame_no = FRAME_STACK-1-BACK_FRAME_STACK
 time_list=[]
 TP = TN = FP1 = FP2 = FN = 0
 
 ballpos = {}
 
 while success:
-	if frame_no == n_frames:
+	if frame_no >= n_frames-BACK_FRAME_STACK:
 		break
 	img_input = np.concatenate(gray_imgs, axis=2)
 	img_input = cv2.resize(img_input, (WIDTH, HEIGHT))
