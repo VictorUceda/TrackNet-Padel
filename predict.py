@@ -29,7 +29,7 @@ video_path = args.video_path
 csv_path = args.label_path
 ball_pos_str = 'Frame,Ball,x,y\n'
 opt = keras.optimizers.Adadelta(learning_rate=1.0)
-model=ResNet_Track(input_shape=(3, HEIGHT, WIDTH))
+model=ResNet_Track(input_shape=(FRAME_STACK, HEIGHT, WIDTH))
 model.compile(loss=BinaryFocalLoss(gamma=2), optimizer=opt, metrics=[keras.metrics.BinaryAccuracy()])
 try:
 	model.load_weights(load_weights)
