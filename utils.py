@@ -13,7 +13,7 @@ def genHeatMap(w, h, cx, cy, r, mag):
     generate heat map of tracking badminton
 
     param:
-    w: width of output heat map 
+    w: width of output heat map
     h: height of output heat map
     cx: x coordinate of badminton
     cy: y coordinate of badminton
@@ -36,12 +36,12 @@ def split_train_test(match_list, ratio=0.9, shuffle=True):
     param:
     match_list --> list of match folder path
     ratio --> split ratio
-    shuffle --> boolean to indicate whether to shuffle match_list 
+    shuffle --> boolean to indicate whether to shuffle match_list
                 before generating dataset lists
     """
     if shuffle:
         random.shuffle(match_list)
-        
+
     n_match = len(match_list)
     train_match = match_list[:int(n_match*ratio)]
     test_match = match_list[int(n_match*ratio):]
@@ -68,10 +68,10 @@ def split_train_test2(match_list, frame_stack, back_frame_stack=0, ratio=0.9, sh
     param:
     match_list --> list of match folder path
     ratio --> split ratio
-    shuffle --> boolean to indicate whether to shuffle match_list 
+    shuffle --> boolean to indicate whether to shuffle match_list
                 before generating dataset lists
     """
-        
+
     n_match = len(match_list)
     x, y = [], []
     x_test, y_test = [], []
@@ -101,7 +101,7 @@ def split_train_test2(match_list, frame_stack, back_frame_stack=0, ratio=0.9, sh
 def read_img(file, hmap=False):
     """
     Read image from path and convert to format suitable for model
-    
+
     param:
     file --> path of image file
     hmap --> boolean to indicate whether image is heat map or not
@@ -116,7 +116,7 @@ def read_img(file, hmap=False):
     img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     img = np.expand_dims(img, 0)
     return img.astype('float')/255.
-	
+
 def check_steps(img_paths, batch_size, frame_stack):
     """
     Compute how many steps required for an training epoch
@@ -134,7 +134,7 @@ def check_steps(img_paths, batch_size, frame_stack):
     n_steps = 0
     for count in frame_counts.values():
         n_steps += (count - (frame_stack-1))//batch_size
-    
+
     return n_steps - 1
 
 def data_generator(batch_size, x_list, y_list, frame_stack, back_frame_stack=0):
@@ -159,7 +159,7 @@ def data_generator(batch_size, x_list, y_list, frame_stack, back_frame_stack=0):
     while True:
         batch_imgs = []
         batch_hmaps = []
-		
+
 		# dynamically pop and append a new image to avoid multiple reading
         for i in reversed(range(batch_size)):
             img = np.concatenate(images, axis=0)
@@ -174,7 +174,7 @@ def data_generator(batch_size, x_list, y_list, frame_stack, back_frame_stack=0):
             if end >= data_size:
                 END = True
                 break
-			
+
 			# if image comes from different video, reset images and heat_maps
             next_info = os.path.split(x_list[end])[-1].split('_')
             curr_info = os.path.split(x_list[end-1])[-1].split('_')
@@ -189,7 +189,7 @@ def data_generator(batch_size, x_list, y_list, frame_stack, back_frame_stack=0):
             images = [read_img(path) for path in x_list[:frame_stack]]
             hmap = read_img(y_list[frame_stack-1-back_frame_stack], hmap=True)
             continue
-        
+
         yield np.array(batch_imgs), np.array(batch_hmaps)
 
 def read_img_pack(im_path, frame_stack, back_frame_stack):
@@ -215,7 +215,7 @@ def data_generator2(batch_size, x_list, y_list, frame_stack, back_frame_stack=0)
     #x_list = sorted(x_list, key=lambda e: int(e.split('/')[-1].split('_')[0][5:])*1000000+int(e.split('_')[-1].split('.')[0]))
     #y_list = sorted(y_list, key=lambda e: int(e.split('/')[-1].split('_')[0][5:])*1000000+int(e.split('_')[-1].split('.')[0]))
     data_size = len(x_list)
-    
+
     # initialize images and heatmaps array
     END = False
     #end = (frame_stack-1) + (batch_size-1)
@@ -225,26 +225,26 @@ def data_generator2(batch_size, x_list, y_list, frame_stack, back_frame_stack=0)
     while True:
         batch_imgs = []
         batch_hmaps = []
-		
+
 		# dynamically pop and append a new image to avoid multiple reading
         for _ in range(batch_size):
             images = read_img_pack(x_list[index], frame_stack, back_frame_stack)
             img = np.concatenate(images, axis=0)
             batch_imgs.append(img)
-            
+
             hmap = read_img(y_list[index], hmap=True)
             batch_hmaps.append(hmap)
-            
+
             index += 1
             if index >= data_size-1:
                 END = True
                 break
-			
+
         if END:
             END=False
             index = 0
             continue
-        
+
         yield np.array(batch_imgs), np.array(batch_hmaps)
 
 def confusion(y_pred, y_true, tol):
@@ -254,13 +254,13 @@ def confusion(y_pred, y_true, tol):
     TN: True negative
     FP2: False positive
     FN: False negative
-    FP1: If distance of ball center between 
+    FP1: If distance of ball center between
          ground truth and prediction is larger than tolerance
 
     param:
     y_pred --> predicted heat map
     y_true --> ground truth heat map
-    tol --> acceptable tolerance of heat map circle center 
+    tol --> acceptable tolerance of heat map circle center
             between ground truth and prediction
     """
     batch_size = y_pred.shape[0]
@@ -300,7 +300,7 @@ def confusion(y_pred, y_true, tol):
                 FP1 += 1
             else:
                 TP += 1
-    
+
     return (TP, TN, FP1, FP2, FN)
 
 def compute_acc(evaluation):
