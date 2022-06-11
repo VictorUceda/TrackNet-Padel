@@ -108,17 +108,12 @@ while success:
 	if frame_no >= n_frames-BACK_FRAME_STACK:
 		break
 	img_input = np.concatenate(gray_imgs, axis=2) if FRAME_STACK > 1 else np.array(gray_imgs[0])
-	print(img_input.shape)
 	img_input = cv2.resize(img_input, (WIDTH, HEIGHT))
 	if FRAME_STACK == 1:
 		img_input = np.array([[[e] for e in f] for f in img_input])
-	print(img_input.shape)
 	img_input = np.moveaxis(img_input, -1, 0)
-	print(img_input.shape)
 	img_input = np.expand_dims(img_input, axis=0)
-	print(img_input.shape)
 	img_input = img_input.astype('float')/255.
-	print(img_input.shape)
 
 	start = time.time()
 	y_pred = model.predict(img_input, batch_size=BATCH_SIZE)
