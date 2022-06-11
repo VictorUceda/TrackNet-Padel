@@ -110,8 +110,11 @@ while success:
 	img_input = np.concatenate(gray_imgs, axis=2) if FRAME_STACK > 1 else np.array(gray_imgs[0])
 	print(img_input.shape)
 	img_input = cv2.resize(img_input, (WIDTH, HEIGHT))
+	print(img_input.shape)
 	img_input = np.moveaxis(img_input, -1, 0)
+	print(img_input.shape)
 	img_input = np.expand_dims(img_input, axis=0)
+	print(img_input.shape)
 	img_input = img_input.astype('float')/255.
 	print(img_input.shape)
 
