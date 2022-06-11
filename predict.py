@@ -36,10 +36,11 @@ try:
 	print("Load weights successfully")
 except:
 	print("Fail to load weights, please modify path in parser.py --load_weights")
+	sys.exit(1)
 
 if not os.path.isfile(video_path) or not video_path.endswith('.mp4'):
-    print("Not a valid video path! Please modify path in parser.py --video_path")
-    sys.exit(1)
+	print("Not a valid video path! Please modify path in parser.py --video_path")
+	sys.exit(1)
 else:
 	# acquire video info
 	cap = cv2.VideoCapture(video_path)
@@ -184,9 +185,9 @@ if compute:
 	print("Recall:", recall)
 	print("Total Time:", total_time)
 	print('(ACC + Pre + Rec)/3:', avg_acc)
-
+else:
+	name_csv = video_path[:-4]+'.csv'
+	with open(name_csv, "w") as fp:
+		fp.write(ball_pos_str)
 print('Done......')
-name_csv = video_path[:-4]+'.csv'
-with open(name_csv, "w") as fp:
-	fp.write(ball_pos_str)
 #print(ball_pos_str)
