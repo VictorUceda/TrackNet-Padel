@@ -107,7 +107,7 @@ ballpos = {}
 while success:
 	if frame_no >= n_frames-BACK_FRAME_STACK:
 		break
-	img_input = np.concatenate(gray_imgs, axis=2) if FRAME_STACK > 1 else np.array(gray_imgs)
+	img_input = np.concatenate(gray_imgs, axis=2) if FRAME_STACK > 1 else np.array(gray_imgs[0])
 	print(img_input.shape)
 	img_input = cv2.resize(img_input, (WIDTH, HEIGHT))
 	img_input = np.moveaxis(img_input, -1, 0)
